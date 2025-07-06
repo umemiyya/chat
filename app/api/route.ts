@@ -8,6 +8,7 @@ import { pipeline } from '@huggingface/transformers';
   // }
   
   export async function POST(req: Request) {
+    
   const answerer = await pipeline('question-answering', 'Xenova/distilbert-base-uncased-distilled-squad');
   try {
     const { question, context } = await req.json();
