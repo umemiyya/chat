@@ -2,13 +2,13 @@
 import { NextResponse } from 'next/server';
 import { pipeline } from '@huggingface/transformers';
 
-const answerer = await pipeline('question-answering', 'Xenova/distilbert-base-uncased-distilled-squad');
 // {
-//   answer: "a nice puppet",
-//   score: 0.5768911502526741
-// }
-
-export async function POST(req: Request) {
+  //   answer: "a nice puppet",
+  //   score: 0.5768911502526741
+  // }
+  
+  export async function POST(req: Request) {
+  const answerer = await pipeline('question-answering', 'Xenova/distilbert-base-uncased-distilled-squad');
   try {
     const { question, context } = await req.json();
 
