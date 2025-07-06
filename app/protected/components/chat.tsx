@@ -34,7 +34,10 @@ export function Chat() {
       const res = await fetch('/api/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ inputValue }),
+      body: JSON.stringify({
+        question: inputValue,
+        context: 'Gua Leang-Leang terletak di Maros.',
+       }),
       });
       const data = await res.json();
       console.log("Response data:", data);
@@ -42,7 +45,7 @@ export function Chat() {
         console.error("Error:", data);
         return;
       }
-      setAiOutputs((prev) => [...prev, data.message || "Tidak ada respons dari Bot"]);
+      setAiOutputs((prev) => [...prev, data.answer || "Tidak ada respons dari Bot"]);
     }
     if (inputValue.trim()) {
       console.log("Sending:", inputValue)

@@ -1,45 +1,42 @@
-// // pages/api/analyze.ts
-// import type { NextApiRequest, NextApiResponse } from 'next';
-// import nlp from 'compromise';
 
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { pipeline } from '@huggingface/transformers';
 
-// export async function GET(req: NextApiRequest, res: NextApiResponse) {
-//   const { text } = req.body;
-
-//   if (!text) {
-//     return res.status(400).json({ error: 'No text provided' });
-//   }
-
-//   const doc = nlp(text);
-//   const nouns = doc.nouns().out('array');
-//   const verbs = doc.verbs().out('array');
-//   const people = doc.people().out('array');
-
-//   res.status(200).json({ nouns, verbs, people });
+const answerer = await pipeline('question-answering', 'Xenova/distilbert-base-uncased-distilled-squad');
+// {
+//   answer: "a nice puppet",
+//   score: 0.5768911502526741
 // }
 
-export async function GET() {
-  return NextResponse.json({
-    message: "This is a placeholder for the analyze endpoint. Please implement your logic here.",
-  })
-}
-
 export async function POST(req: Request) {
-  const { inputValue } = await req.json();
+  try {
+    const { question, context } = await req.json();
 
-  console.log("Received inputValue:", inputValue);
+    console.log('Received question:', question);
+    console.log('Received context:', context);
 
-  if (!inputValue) {
-    return NextResponse.json({ error: 'No inputValue provided' }, { status: 400 });
+    // Validasi tipe data
+    if (typeof question !== 'string' || typeof context !== 'string') {
+      return NextResponse.json(
+        { error: 'question and context must be strings' },
+        { status: 400 }
+      );
+    }
+
+    // Jalankan QA
+    const output = await answerer(question, context);
+
+    return NextResponse.json(output);
+
+  } catch (err: unknown) {
+  console.error('Error during QA:', err);
+
+  let message = 'Unknown error';
+
+  if (err instanceof Error) {
+    message = err.message;
   }
 
-  // const doc = nlp(inputValue);
-  // const nouns = doc.nouns().out('array');
-  // const verbs = doc.verbs().out('array');
-  // const people = doc.people().out('array');
-
-  return NextResponse.json({
-    message: "Hello Dek!"
-  });
+  return NextResponse.json({ error: message }, { status: 500 });
+  }
 }
