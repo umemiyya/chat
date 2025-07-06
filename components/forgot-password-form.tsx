@@ -49,23 +49,28 @@ export function ForgotPasswordForm({
       {success ? (
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">Check Your Email</CardTitle>
-            <CardDescription>Password reset instructions sent</CardDescription>
+            <CardTitle className="text-2xl">Berhasil!</CardTitle>
+            <CardDescription>
+              Kami telah mengirimkan email untuk mengatur ulang kata sandi Anda.
+              Silakan periksa kotak masuk email Anda dan ikuti instruksi yang
+              diberikan.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              If you registered using your email and password, you will receive
-              a password reset email.
+              Jika Anda tidak menerima email, periksa folder spam atau coba
+              lagi dengan email yang berbeda.
             </p>
           </CardContent>
         </Card>
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">Reset Your Password</CardTitle>
+            <CardTitle className="text-2xl">Atur ulang sandi!</CardTitle>
             <CardDescription>
-              Type in your email and we&apos;ll send you a link to reset your
-              password
+              Masukkan email Anda untuk mengatur ulang kata sandi akun Anda.
+              Kami akan mengirimkan tautan untuk mengatur ulang kata sandi ke
+              email tersebut.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -84,16 +89,16 @@ export function ForgotPasswordForm({
                 </div>
                 {error && <p className="text-sm text-red-500">{error}</p>}
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Sending..." : "Send reset email"}
+                  {isLoading ? "Mengirim..." : "Kirim"}
                 </Button>
               </div>
               <div className="mt-4 text-center text-sm">
-                Already have an account?{" "}
+                Sudah punya akun?{" "}
                 <Link
                   href="/auth/login"
                   className="underline underline-offset-4"
                 >
-                  Login
+                  Masuk
                 </Link>
               </div>
             </form>

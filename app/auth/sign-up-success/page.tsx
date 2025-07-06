@@ -1,6 +1,5 @@
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -14,16 +13,21 @@ export default function Page() {
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl">
-                Thank you for signing up!
+                Berhasil!
               </CardTitle>
-              <CardDescription>Check your email to confirm</CardDescription>
+              <CardDescription>
+                Akun Anda telah berhasil dibuat. Silakan periksa email Anda
+                untuk mengonfirmasi akun sebelum masuk.
+              </CardDescription>
             </CardHeader>
-            <CardContent>
+            {/* <CardContent>
               <p className="text-sm text-muted-foreground">
-                You&apos;ve successfully signed up. Please check your email to
-                confirm your account before signing in.
+                Terima kasih telah mendaftar! Kami telah mengirimkan email
+                konfirmasi ke alamat email yang Anda berikan. Silakan buka
+                email tersebut dan ikuti instruksi untuk mengonfirmasi akun
+                Anda. Setelah itu, Anda dapat masuk ke akun Anda.
               </p>
-            </CardContent>
+            </CardContent> */}
           </Card>
         </div>
       </div>
