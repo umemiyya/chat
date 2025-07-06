@@ -26,15 +26,15 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { input } = await req.json();
+  const { inputValue } = await req.json();
 
-  console.log("Received input:", input);
+  console.log("Received inputValue:", inputValue);
 
-  if (!input) {
-    return NextResponse.json({ error: 'No input provided' }, { status: 400 });
+  if (!inputValue) {
+    return NextResponse.json({ error: 'No inputValue provided' }, { status: 400 });
   }
 
-  // const doc = nlp(input);
+  // const doc = nlp(inputValue);
   // const nouns = doc.nouns().out('array');
   // const verbs = doc.verbs().out('array');
   // const people = doc.people().out('array');

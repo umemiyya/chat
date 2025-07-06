@@ -26,12 +26,23 @@ export function Chat() {
   const [userInputs, setUserInputs] = useState<string[]>([])
   const [aiOutputs, setAiOutputs] = useState<string[]>([])
 
-  const handleSend = () => {
+  const handleSend = async () => {
     // Add user input to the history
     if (inputValue.trim()) {
       setUserInputs((prev) => [...prev, inputValue])
       // Simulate AI response
-      setAiOutputs((prev) => [...prev, "AI is thinking..."])
+      const res = await fetch('/api/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ inputValue }),
+      });
+      const data = await res.json();
+      console.log("Response data:", data);
+      if (res.status !== 200) {
+        console.error("Error:", data);
+        return;
+      }
+      setAiOutputs((prev) => [...prev, data.message || "Tidak ada respons dari Bot"]);
     }
     if (inputValue.trim()) {
       console.log("Sending:", inputValue)
@@ -47,7 +58,7 @@ export function Chat() {
       <Message className="justify-start">
         <MessageAvatar src="/avatars/ai.png" alt="CB" fallback="CB" />
           <ResponseStream
-            textStream={"Selamat datang di portal layanan informasi wisata kami. Kami hadir untuk memberikan panduan terbaik bagi Anda yang ingin merencanakan perjalanan yang menyenangkan dan berkesan. Dengan berbagai pilihan destinasi lokal maupun nasional, kami siap membantu Anda mengeksplorasi keindahan alam, budaya, dan kekayaan Indonesia. Silakan pilih kategori wisata yang Anda minati, dan kami akan memberikan informasi lengkapnya."}
+            textStream={"Selamat datang di portal layanan informasi wisata kami. Silakan ajukan pertanyaan yang relevan dan kami akan memberikan informasi lengkapnya."}
             mode="typewriter"
             speed={30}
             className="text-sm/6 bg-transparent p-0"
@@ -65,7 +76,7 @@ export function Chat() {
             <Message className="justify-start max-w-[80%]">
               <MessageAvatar src="/avatars/ai.png" alt="AI" fallback="AI" />
                 <ResponseStream
-                  textStream={aiOutputs[index] || "No response from AI"}
+                  textStream={aiOutputs[index] || "Memproses..."}
                   mode="typewriter"
                   speed={30}
                   className="text-sm/6 bg-transparent p-0"
