@@ -36,7 +36,7 @@ export function Chat() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         question: inputValue,
-        context: 'Gua Leang-Leang terletak di Maros.',
+        context: 'Gua Leang-Leang terletak di Maros. Daya tariknya beragam. Tidak ada fasilitas khusus. Harga tiket masuknya sekitar Rp 10.000 per orang. Lokasinya mudah dijangkau dari kota Makassar. Cara menuju ke sana bisa menggunakan kendaraan pribadi atau angkutan umum.',
        }),
       });
       const data = await res.json();

@@ -1,18 +1,41 @@
 
 import { NextResponse } from 'next/server';
 import { pipeline } from '@huggingface/transformers';
+import { createClient } from '@/lib/supabase/client';
 
 // {
   //   answer: "a nice puppet",
   //   score: 0.5768911502526741
   // }
+
+function bersihkan(str:string) {
+  return str.replace(/[^a-z0-9]/gi, '').toLowerCase();
+}
+
   
+  const supabase = createClient()
   export async function POST(req: Request) {
     
   const answerer = await pipeline('question-answering', 'Xenova/distilbert-base-uncased-distilled-squad');
   try {
     const { question, context } = await req.json();
+    // get from api supabase
+    
+  let { data: dataset, error } = await (await supabase).from('dataset').select('*')
+  console.log(dataset)
 
+  const questionLowerCase = bersihkan(question.toString());
+
+  // check if quetion have identic dataset quetion
+  if (dataset && dataset.length > 0) {
+    const found = dataset.find(item => bersihkan(item.question.toString()) === questionLowerCase);
+    if (found) {
+      console.log('Found matching question in dataset:', found.question);
+      const output = await answerer(question, found.answer);
+      return NextResponse.json(output);
+    }
+  }
+          
     console.log('Received question:', question);
     console.log('Received context:', context);
 
