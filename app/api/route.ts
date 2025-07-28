@@ -21,8 +21,7 @@ function bersihkan(str:string) {
     const { question, context } = await req.json();
     // get from api supabase
     
-  let { data: dataset, error } = await (await supabase).from('dataset').select('*')
-  console.log(dataset)
+  const { data: dataset, } = await (await supabase).from('dataset').select('*')
 
   const questionLowerCase = bersihkan(question.toString());
 

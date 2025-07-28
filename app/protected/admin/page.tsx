@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Table } from "@/components/ui/table";
+// import { Table } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { TableQa } from "./table";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ export default function Admin() {
   const getDataset = async () => {
     setLoading(true)
 
-    let { data: dataset, error } = await (await supabase).from('dataset').select('*')
+    const { data: dataset, error} = await (await supabase).from('dataset').select('*')
     if (error) {
       console.error('Error fetching dataset:', error);
       setLoading(false);
