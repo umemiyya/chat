@@ -1,5 +1,6 @@
 export function NextLogo() {
   return (
+    
     <svg
       aria-label="Next.js logotype"
       height="68"
