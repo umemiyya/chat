@@ -39,7 +39,7 @@ export function LoginForm({
       });
       if (error) throw error;
       // Update this route to redirect to an authenticated route. The user already has an active session.
-      if(email == 'youremail@gmail.com') {
+      if(email == 'alisyabanm5@gmail.com') {
         router.push("/protected/admin")
         return;
       }
