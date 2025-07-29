@@ -35,9 +35,6 @@ function bersihkan(str:string) {
     }
   }
           
-    console.log('Received question:', question);
-    console.log('Received context:', context);
-
     // Validasi tipe data
     if (typeof question !== 'string' || typeof context !== 'string') {
       return NextResponse.json(
@@ -62,4 +59,8 @@ function bersihkan(str:string) {
 
   return NextResponse.json({ error: message }, { status: 500 });
   }
+}
+
+export async function GET() {
+  return NextResponse.json({ message: 'Hello from the API route!' });
 }
