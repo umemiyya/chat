@@ -2,7 +2,7 @@
 // import { EnvVarWarning } from "@/components/env-var-warning";
 import { AuthButton } from "@/components/auth-button";
 import { Hero } from "@/components/hero";
-import { ThemeSwitcher } from "@/components/theme-switcher";
+// import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
 
 export default function Home() {
@@ -28,7 +28,7 @@ export default function Home() {
           </main> */}
         </div>
 
-        <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
+        {/* <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
           <p>
             Powered by{" "}
             <a
@@ -40,8 +40,7 @@ export default function Home() {
               Chat
             </a>
           </p>
-          <ThemeSwitcher />
-        </footer>
+        </footer> */}
       </div>
     </main>
   );

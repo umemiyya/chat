@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import { pipeline } from '@huggingface/transformers';
 import { createClient } from '@/lib/supabase/client';
+import { similarity } from '@/lib/utils';
 
 // {
   //   answer: "a nice puppet",
@@ -16,25 +17,27 @@ const loadModel = pipeline('question-answering', 'Xenova/distilbert-base-uncased
 
 const supabase = createClient();
 const answerer = await loadModel;
-  export async function POST(req: Request) {
-    
+export async function POST(req: Request) {
   try {
     const { question, context } = await req.json();
     // get from api supabase
     
-  const { data: dataset, } = await (await supabase).from('dataset').select('*')
+    const { data: dataset, } = await (await supabase).from('dataset').select('*')
 
-  const questionLowerCase = bersihkan(question.toString());
+    const questionLowerCase = bersihkan(question.toString());
 
-  // check if quetion have identic dataset quetion
-  if (dataset && dataset.length > 0) {
-    const found = dataset.find(item => bersihkan(item.question.toString()) === questionLowerCase);
-    if (found) {
-      console.log('Found matching question in dataset:', found.question);
-      const output = await answerer(question, found.answer);
-      return NextResponse.json(output);
+    // check if quetion have identic dataset quetion
+    if (dataset && dataset.length > 0) {
+      const bestMatchContext = similarity(questionLowerCase, dataset ?? [])
+      // const found = dataset.find(item => bersihkan(item.question.toString()) === questionLowerCase);
+      // if (found) {
+      //   console.log('Found matching question in dataset:', found.question);
+      //   const output = await answerer(question, found.answer);
+      //   return NextResponse.json(output);
+      // }
+        const output = await answerer(bestMatchContext.question, bestMatchContext.context);
+        return NextResponse.json(output);
     }
-  }
           
     // Validasi tipe data
     if (typeof question !== 'string' || typeof context !== 'string') {
@@ -50,15 +53,12 @@ const answerer = await loadModel;
     return NextResponse.json(output);
 
   } catch (err: unknown) {
-  console.error('Error during QA:', err);
-
-  let message = 'Unknown error';
-
-  if (err instanceof Error) {
-    message = err.message;
-  }
-
-  return NextResponse.json({ error: message }, { status: 500 });
+    console.error('Error during QA:', err);
+    let message = 'Unknown error';
+    if (err instanceof Error) {
+      message = err.message;
+    }
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
