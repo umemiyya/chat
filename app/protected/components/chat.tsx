@@ -59,7 +59,7 @@ export function Chat() {
         message history
       */}
       <Message className="justify-start">
-        <MessageAvatar src="/avatars/ai.png" alt="CB" fallback="CB" />
+        <MessageAvatar src="/avatars/ai.png" alt="AI" fallback="AI" />
           <ResponseStream
             textStream={"Selamat datang di portal layanan informasi wisata kami. Silakan ajukan pertanyaan yang relevan dan kami akan memberikan informasi lengkapnya."}
             mode="typewriter"

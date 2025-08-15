@@ -20,6 +20,7 @@ export function similarity(userQuestion: string, dataset: { question: string; an
   });
 
   return {
+    score: highestScore,
     question: dataset[bestMatchIndex].question,
     context: dataset[bestMatchIndex].answer
   };

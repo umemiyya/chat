@@ -1,44 +1,28 @@
-
 import { NextResponse } from 'next/server';
-import { pipeline } from '@huggingface/transformers';
 import { createClient } from '@/lib/supabase/client';
 import { similarity } from '@/lib/utils';
-
-// {
-  //   answer: "a nice puppet",
-  //   score: 0.5768911502526741
-  // }
 
 function bersihkan(str:string) {
   return str.replace(/[^a-z0-9]/gi, '').toLowerCase();
 }
 
-const loadModel = pipeline('question-answering', 'Xenova/distilbert-base-uncased-distilled-squad');
-
 const supabase = createClient();
-const answerer = await loadModel;
+// transformers
+
+// const answerer = await loadModel;
 export async function POST(req: Request) {
   try {
     const { question, context } = await req.json();
-    // get from api supabase
-    
+
     const { data: dataset, } = await (await supabase).from('dataset').select('*')
 
     const questionLowerCase = bersihkan(question.toString());
 
-    // check if quetion have identic dataset quetion
     if (dataset && dataset.length > 0) {
       const bestMatchContext = similarity(questionLowerCase, dataset ?? [])
-      // const found = dataset.find(item => bersihkan(item.question.toString()) === questionLowerCase);
-      // if (found) {
-      //   console.log('Found matching question in dataset:', found.question);
-      //   const output = await answerer(question, found.answer);
-      //   return NextResponse.json(output);
-      // }
-        const output = await answerer(bestMatchContext.question, bestMatchContext.context);
-        return NextResponse.json(output);
+      return NextResponse.json({ answer: `${bestMatchContext.context} (${parseFloat(bestMatchContext.score.toFixed(2))})`, score: bestMatchContext.score});
     }
-          
+
     // Validasi tipe data
     if (typeof question !== 'string' || typeof context !== 'string') {
       return NextResponse.json(
@@ -46,12 +30,6 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
-    // Jalankan QA
-    const output = await answerer(question, context);
-
-    return NextResponse.json(output);
-
   } catch (err: unknown) {
     console.error('Error during QA:', err);
     let message = 'Unknown error';
