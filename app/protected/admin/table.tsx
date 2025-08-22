@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -8,25 +8,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { createClient } from "@/lib/supabase/client";
+// import { createClient } from "@/lib/supabase/client";
 
-export function TableQa({data, handler} : {data: any[], handler: any}) {
+export function TableQa({data} : {data: any[], handler: any}) {
 
-  const handlerDelete = async (id: string) => {
-    if (!confirm('Yakin ingin menghapus data ini?')) return;
-    const supabase = createClient()
-    const { error } = await supabase
-      .from('dataset')
-      .delete()
-      .eq('id', id)
+  // const handlerDelete = async (id: string) => {
+  //   if (!confirm('Yakin ingin menghapus data ini?')) return;
+  //   const supabase = createClient()
+  //   const { error } = await supabase
+  //     .from('dataset')
+  //     .delete()
+  //     .eq('id', id)
 
-    handler()
-    if (error) {
-      console.error('Error deleting data:', error)
-      return
-    }
-    alert('Data berhasil dihapus')
-  }
+  //   handler()
+  //   if (error) {
+  //     console.error('Error deleting data:', error)
+  //     return
+  //   }
+  //   alert('Data berhasil dihapus')
+  // }
 
   return (
     <Table>
@@ -36,7 +36,7 @@ export function TableQa({data, handler} : {data: any[], handler: any}) {
           <TableHead className="w-[100px]">No</TableHead>
           <TableHead>Pertanyaan</TableHead>
           <TableHead>Jawaban</TableHead>
-          <TableHead className="text-right">Action</TableHead>
+          {/* <TableHead className="text-right">Action</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -45,9 +45,9 @@ export function TableQa({data, handler} : {data: any[], handler: any}) {
             <TableCell className="font-medium">{index+1}</TableCell>
             <TableCell className="font-medium">{qa.question}</TableCell>
             <TableCell>{qa.answer}</TableCell>
-            <TableCell className="text-right">
+            {/* <TableCell className="text-right">
               <Button onClick={() => handlerDelete(qa.id)} >Hapus</Button>
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>

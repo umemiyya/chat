@@ -25,7 +25,7 @@ export function Chat() {
 
   const [userInputs, setUserInputs] = useState<string[]>([])
   const [dataOutput, setDataOutput] = useState<any[]>([])
-  const [aiOutputs, setAiOutputs] = useState<string[]>([])
+  const [ , setAiOutputs] = useState<string[]>([])
 
   const handleSend = async () => {
     // Add user input to the history
