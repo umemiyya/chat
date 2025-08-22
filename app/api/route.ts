@@ -11,6 +11,7 @@ const supabase = createClient();
 
 // const answerer = await loadModel;
 export async function POST(req: Request) {
+  const start = performance.now();
   try {
     const { question, context } = await req.json();
 
@@ -20,7 +21,9 @@ export async function POST(req: Request) {
 
     if (dataset && dataset.length > 0) {
       const bestMatchContext = similarity(questionLowerCase, dataset ?? [])
-      return NextResponse.json({ answer: `${bestMatchContext.context} (${parseFloat(bestMatchContext.score.toFixed(2))})`, score: bestMatchContext.score});
+      const end = performance.now();
+      const durationSec = ((end - start) / 1000).toFixed(2);
+      return NextResponse.json({ answer: `${bestMatchContext.context}`, score: bestMatchContext.score, duration: durationSec });
     }
 
     // Validasi tipe data
@@ -36,7 +39,9 @@ export async function POST(req: Request) {
     if (err instanceof Error) {
       message = err.message;
     }
-    return NextResponse.json({ error: message }, { status: 500 });
+      const end = performance.now();
+      const durationSec = ((end - start) / 1000).toFixed(2);
+    return NextResponse.json({ error: message, duration: durationSec }, { status: 500 });
   }
 }
 

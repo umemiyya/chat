@@ -24,6 +24,7 @@ export function Chat() {
   const [inputValue, setInputValue] = useState("")
 
   const [userInputs, setUserInputs] = useState<string[]>([])
+  const [dataOutput, setDataOutput] = useState<any[]>([])
   const [aiOutputs, setAiOutputs] = useState<string[]>([])
 
   const handleSend = async () => {
@@ -45,6 +46,7 @@ export function Chat() {
         console.error("Error:", data);
         return;
       }
+      setDataOutput((prev) => [...prev, data]);
       setAiOutputs((prev) => [...prev, data.answer || "Tidak ada respons dari Bot"]);
     }
     if (inputValue.trim()) {
@@ -76,15 +78,19 @@ export function Chat() {
                 {userInput}
               </MessageContent>
             </Message>
-            <Message className="justify-start max-w-[80%]">
-              <MessageAvatar src="/avatars/ai.png" alt="AI" fallback="AI" />
-                <ResponseStream
-                  textStream={aiOutputs[index] || "Memproses..."}
-                  mode="typewriter"
-                  speed={30}
-                  className="text-sm/6 bg-transparent p-0"
-                />
-            </Message>
+            <div>
+              <p className="text-sm/6 py-2">{dataOutput[index]?.answer ? `Berpikir selama ${dataOutput[index]?.duration} detik` : "Sedang berfikir..."}</p>
+              <Message className="max-w-[80%]">
+                <MessageAvatar src="/avatars/ai.png" alt="AI" fallback="AI" />
+                  <ResponseStream
+                    textStream={dataOutput[index]?.score < 0.5 ? "Maaf saya tidak bisa memberikan jawaban yang tepat. Kurasi pertanyaan agar tetap pada topik wisata goa di Maros. Terima kasih" : dataOutput[index]?.answer}
+                    mode="typewriter"
+                    speed={30}
+                    className="text-sm/6 bg-transparent "
+                  />
+              </Message>
+              <p className="text-sm/6 py-2">{dataOutput[index]?.answer && `Akurasi jawaban ${parseFloat(dataOutput[index]?.score.toFixed(2))*100}%`}</p>
+            </div>
           </div>
           ))
         )}

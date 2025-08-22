@@ -3,6 +3,7 @@
 import { AuthButton } from "@/components/auth-button";
 // import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
+import PastelGradient from "@/components/bg-2";
 
 export default function ProtectedLayout({
   children,
@@ -10,6 +11,7 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   return (
+   <PastelGradient>
     <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
@@ -39,5 +41,6 @@ export default function ProtectedLayout({
         </footer> */}
       </div>
     </main>
+    </PastelGradient>
   );
 }
