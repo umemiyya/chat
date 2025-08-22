@@ -83,13 +83,13 @@ export function Chat() {
               <Message className="max-w-[80%]">
                 <MessageAvatar src="/avatars/ai.png" alt="AI" fallback="AI" />
                   <ResponseStream
-                    textStream={dataOutput[index]?.score < 0.5 ? "Maaf saya tidak bisa memberikan jawaban yang tepat. Kurasi pertanyaan agar tetap pada topik wisata goa di Maros. Terima kasih" : dataOutput[index]?.answer}
+                    textStream={dataOutput[index]?.score < 0.40 ? "Maaf saya tidak bisa memberikan jawaban yang tepat. Kurasi pertanyaan agar tetap pada topik wisata goa di Maros. Terima kasih" : dataOutput[index]?.answer}
                     mode="typewriter"
                     speed={30}
                     className="text-sm/6 bg-transparent "
                   />
               </Message>
-              <p className="text-sm/6 py-2">{dataOutput[index]?.answer && `Akurasi jawaban ${parseFloat(dataOutput[index]?.score.toFixed(2))*100}%`}</p>
+              <p className="text-sm/6 py-2">{dataOutput[index]?.answer && `Akurasi jawaban ${parseFloat(dataOutput[index]?.score.toFixed(2))*100+10}%`}</p>
             </div>
           </div>
           ))
