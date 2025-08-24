@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { TableQa } from "./table";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+// import Link from "next/link";
 
 export default function Admin() {
   const [dataset, setDataset] = useState<any[]>([]);
@@ -58,8 +59,6 @@ export default function Admin() {
     setLoading(false)
   }
 
-  
-
   useEffect(() => {
     getDataset()
   },[])
@@ -89,10 +88,11 @@ export default function Admin() {
             className="mt-2"
           />
         </div>
-        <div>
+        <div className="space-x-2">
           <Button onClick={() => handlerSubmit()}>Simpan</Button>
         </div>
       </div>
+  
       {/* answer */}
       {loading ? (
         <p>memuat...</p>

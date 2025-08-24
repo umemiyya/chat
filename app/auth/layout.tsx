@@ -1,4 +1,4 @@
-import PastelGradient from "@/components/bg-2";
+// import PastelGradient from "@/components/bg-2";
 
 export default function ProtectedLayout({
   children,
@@ -6,8 +6,8 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   return (
-   <PastelGradient>
+   <main className="bg-[#FEF7EE]">
      {children}
-   </PastelGradient>
+   </main>
   )
 }
