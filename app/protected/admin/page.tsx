@@ -41,11 +41,15 @@ export default function Admin() {
       setLoading(false)
       return
     }
+
+    // random number antara 2000 dan 5000
+    const randomNumber = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
+
     
     const { data, error } = await supabase
       .from('dataset')
       .insert([
-        { question, answer },
+        {id:randomNumber,  question, answer },
       ])
       .select()
 
