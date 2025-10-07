@@ -89,7 +89,7 @@ export function Chat() {
                     className="text-sm/6 bg-transparent "
                   />
               </Message>
-              <p className="text-sm/6 py-2">{dataOutput[index]?.answer && `Akurasi jawaban ${parseFloat(dataOutput[index]?.score.toFixed(2))*100+10}%`}</p>
+              {/* <p className="text-sm/6 py-2">{dataOutput[index]?.answer && `Akurasi jawaban ${parseFloat(dataOutput[index]?.score.toFixed(2))*100+10}%`}</p> */}
             </div>
           </div>
           ))
